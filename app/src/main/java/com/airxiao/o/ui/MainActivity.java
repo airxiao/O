@@ -1,31 +1,50 @@
-package com.airxiao.o;
+package com.airxiao.o.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
-public class MainActivity extends AppCompatActivity {
+import com.airxiao.o.R;
+import com.airxiao.o.base.BaseActivity;
+import com.airxiao.o.base.BasePresenter;
+
+import butterknife.BindView;
+
+public class MainActivity extends BaseActivity<> {
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer_layout;
+    @BindView(R.id.navigation)
+    NavigationView navigation;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.framelayout)
+    FrameLayout framelayout;
+    @BindView(R.id.tabs)
+    TabLayout tabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
+    }
+
+    @Override
+    protected int layoutID() {
+        return R.layout.activity_main;
     }
 
     @Override
