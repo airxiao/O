@@ -11,11 +11,12 @@ import android.widget.FrameLayout;
 
 import com.airxiao.o.R;
 import com.airxiao.o.base.BaseActivity;
-import com.airxiao.o.base.BasePresenter;
+import com.airxiao.o.mvp.main.MainPresenter;
+import com.airxiao.o.mvp.main.MainView;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity<> {
+public class MainActivity extends BaseActivity<MainPresenter> implements MainView{
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer_layout;
@@ -38,12 +39,12 @@ public class MainActivity extends BaseActivity<> {
     }
 
     @Override
-    protected BasePresenter createPresenter() {
+    protected MainPresenter createPresenter() {
         return null;
     }
 
     @Override
-    protected int layoutID() {
+    protected int setLayoutID() {
         return R.layout.activity_main;
     }
 
@@ -68,4 +69,5 @@ public class MainActivity extends BaseActivity<> {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
