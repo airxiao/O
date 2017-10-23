@@ -7,12 +7,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import com.airxiao.o.R;
+import com.airxiao.o.adapter.FragmentAdapter;
 import com.airxiao.o.base.BaseActivity;
 import com.airxiao.o.mvp.main.MainPresenter;
 import com.airxiao.o.mvp.main.MainView;
+import com.airxiao.o.view.NoScrollViewPager;
 
 import butterknife.BindView;
 
@@ -24,8 +25,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     NavigationView navigation;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.framelayout)
-    FrameLayout framelayout;
+    @BindView(R.id.noscrollviewpager)
+    NoScrollViewPager noscrollviewpager;
     @BindView(R.id.tabs)
     TabLayout tabs;
 
@@ -35,12 +36,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        initUI();
     }
 
     @Override
     protected MainPresenter createPresenter() {
-        return null;
+        return new MainPresenter(this);
     }
 
     @Override
@@ -48,26 +49,40 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         return R.layout.activity_main;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void initUI() {
+        setupViewPager();
+
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    private void setupViewPager() {
+        if (noscrollviewpager != null) {
+            FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
+            adapter.addFragment(new StudyFragment(), "干货");
+            adapter.addFragment(new WelfareFragment(), "福利");
+            noscrollviewpager.setAdapter(adapter);
+        }
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        @Override
+        public boolean onCreateOptionsMenu (Menu menu){
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.menu_main, menu);
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
-    }
+        @Override
+        public boolean onOptionsItemSelected (MenuItem item){
+            // Handle action bar item clicks here. The action bar will
+            // automatically handle clicks on the Home/Up button, so long
+            // as you specify a parent activity in AndroidManifest.xml.
+            int id = item.getItemId();
+
+            //noinspection SimplifiableIfStatement
+            if (id == R.id.action_settings) {
+                return true;
+            }
+
+            return super.onOptionsItemSelected(item);
+        }
 
 }

@@ -7,4 +7,5 @@ import com.airxiao.o.base.BaseView;
  */
 
 public interface MainView extends BaseView {
+
 }
