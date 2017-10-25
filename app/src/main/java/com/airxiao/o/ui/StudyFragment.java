@@ -3,14 +3,15 @@ package com.airxiao.o.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.airxiao.o.R;
+import com.airxiao.o.adapter.FragmentAdapter;
+import com.airxiao.o.base.BaseFragment;
+import com.airxiao.o.base.BasePresenter;
 
 import butterknife.BindView;
 
@@ -18,10 +19,8 @@ import butterknife.BindView;
  * Created by xiaoyunlou on 17/10/22.
  */
 
-public class StudyFragment extends Fragment {
+public class StudyFragment extends BaseFragment {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.tabs)
     TabLayout tabs;
     @BindView(R.id.viewpager)
@@ -35,10 +34,30 @@ public class StudyFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        initUI();
 
 
     }
 
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
+    }
+
+    public void initUI() {
+        setupViewPager();
+        tabs.setupWithViewPager(viewpager);
+    }
+
+    private void setupViewPager() {
+        if (viewpager != null) {
+            FragmentAdapter adapter = new FragmentAdapter(getActivity().getSupportFragmentManager());
+            adapter.addFragment(new KnowledgeFragment(), "全部");
+            adapter.addFragment(new KnowledgeFragment(), "Android");
+            adapter.addFragment(new KnowledgeFragment(), "IOS");
+            adapter.addFragment(new KnowledgeFragment(), "前端");
+            viewpager.setAdapter(adapter);
+        }
+    }
 
 }

@@ -4,10 +4,10 @@ import com.airxiao.o.base.BaseFragment;
 import com.airxiao.o.base.BasePresenter;
 
 /**
- * Created by xiaoyunlou on 17/10/22.
+ * Created by xiaoyunlou on 17/10/25.
  */
 
-public class WelfareFragment extends BaseFragment {
+public class KnowledgeFragment extends BaseFragment {
 
 
     @Override

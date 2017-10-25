@@ -1,6 +1,7 @@
 package com.airxiao.o.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.DrawerLayout;
@@ -17,7 +18,7 @@ import com.airxiao.o.view.NoScrollViewPager;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity<MainPresenter> implements MainView{
+public class MainActivity extends BaseActivity<MainPresenter> implements MainView, NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer_layout;
@@ -51,7 +52,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     public void initUI() {
         setupViewPager();
+        setupDraweContent();
+        tabs.setupWithViewPager(noscrollviewpager);
+    }
 
+    private void setupDraweContent() {
+        if (navigation != null) {
+            navigation.setNavigationItemSelectedListener(this);
+        }
     }
 
     private void setupViewPager() {
@@ -63,26 +71,49 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
         }
     }
 
-        @Override
-        public boolean onCreateOptionsMenu (Menu menu){
-            // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.menu_main, menu);
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
             return true;
         }
 
-        @Override
-        public boolean onOptionsItemSelected (MenuItem item){
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
+        return super.onOptionsItemSelected(item);
+    }
 
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.action_settings) {
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        drawer_layout.closeDrawers();
+        switch (item.getItemId()) {
+            case R.id.navigation_item_1:
+//                item.setChecked(true);
+
                 return true;
-            }
+            case R.id.navigation_item_2:
+//                item.setChecked(true);
 
-            return super.onOptionsItemSelected(item);
+                return true;
+            case R.id.navigation_item_day:
+
+                return true;
+            case R.id.navigation_item_night:
+
+                return true;
+            default:
+                return true;
         }
-
+    }
 }
