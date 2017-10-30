@@ -1,12 +1,13 @@
 package com.airxiao.o.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by xiaoyunlou on 17/10/26.
  */
 
-public class KnowledageResBean {
+public class KnowledageResBean implements Serializable {
 
     private boolean error;
     private List<ResultsBean> results;

@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 import com.airxiao.o.R;
 import com.airxiao.o.adapter.FragmentAdapter;
 import com.airxiao.o.base.BaseFragment;
-import com.airxiao.o.base.BasePresenter;
+import com.airxiao.o.mvp.study.StudyPresenter;
+import com.airxiao.o.mvp.study.StudyView;
 
 import butterknife.BindView;
 
@@ -19,7 +20,7 @@ import butterknife.BindView;
  * Created by xiaoyunlou on 17/10/22.
  */
 
-public class StudyFragment extends BaseFragment {
+public class StudyFragment extends BaseFragment<StudyPresenter> implements StudyView{
 
     @BindView(R.id.tabs)
     TabLayout tabs;
@@ -40,8 +41,8 @@ public class StudyFragment extends BaseFragment {
     }
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected StudyPresenter createPresenter() {
+        return new StudyPresenter(this);
     }
 
     public void initUI() {
@@ -52,10 +53,10 @@ public class StudyFragment extends BaseFragment {
     private void setupViewPager() {
         if (viewpager != null) {
             FragmentAdapter adapter = new FragmentAdapter(getActivity().getSupportFragmentManager());
-            adapter.addFragment(new KnowledgeFragment(), "全部");
-            adapter.addFragment(new KnowledgeFragment(), "Android");
-            adapter.addFragment(new KnowledgeFragment(), "IOS");
-            adapter.addFragment(new KnowledgeFragment(), "前端");
+            adapter.addFragment(KnowledgeFragment.newInstance("all"), "全部");
+            adapter.addFragment(KnowledgeFragment.newInstance("Android"), "Android");
+            adapter.addFragment(KnowledgeFragment.newInstance("IOS"), "IOS");
+            adapter.addFragment(KnowledgeFragment.newInstance("前端"), "前端");
             viewpager.setAdapter(adapter);
         }
     }

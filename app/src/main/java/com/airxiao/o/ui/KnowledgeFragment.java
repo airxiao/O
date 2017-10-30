@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 import com.airxiao.o.R;
 import com.airxiao.o.adapter.RecyclerViewAdapter;
 import com.airxiao.o.base.BaseFragment;
-import com.airxiao.o.base.BasePresenter;
+import com.airxiao.o.mvp.knowledge.KnowledgePresenter;
+import com.airxiao.o.mvp.knowledge.KnowledgeView;
 
 import butterknife.BindView;
 
@@ -19,16 +20,25 @@ import butterknife.BindView;
  * Created by xiaoyunlou on 17/10/25.
  */
 
-public class KnowledgeFragment extends BaseFragment {
+public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implements KnowledgeView{
 
     private RecyclerViewAdapter mRecyclerViewAdapter;
+    private static final String TYPE = "Type";
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    public static KnowledgeFragment newInstance(String type) {
+        KnowledgeFragment fragment = new KnowledgeFragment();
+        Bundle args = new Bundle();
+        args.putString(TYPE, type);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected KnowledgePresenter createPresenter() {
+        return new KnowledgePresenter(this);
     }
 
     @Nullable
