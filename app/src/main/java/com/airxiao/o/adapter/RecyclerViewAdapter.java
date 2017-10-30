@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.airxiao.o.R;
 import com.airxiao.o.entity.KnowledageResBean;
+import com.airxiao.o.ui.WebviewActivity;
 import com.airxiao.o.utils.ImgLoadUtil;
 import com.airxiao.o.utils.TimeUtil;
 
@@ -80,7 +81,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    WebviewActivity.loadUrl(view.getContext(), list.get(getLayoutPosition()).getUrl(), "加载中...");
                 }
             });
         }
