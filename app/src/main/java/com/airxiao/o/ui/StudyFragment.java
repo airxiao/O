@@ -33,11 +33,9 @@ public class StudyFragment extends BaseFragment<StudyPresenter> implements Study
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         initUI();
-
-
     }
 
     @Override
@@ -52,12 +50,14 @@ public class StudyFragment extends BaseFragment<StudyPresenter> implements Study
 
     private void setupViewPager() {
         if (viewpager != null) {
-            FragmentAdapter adapter = new FragmentAdapter(getActivity().getSupportFragmentManager());
+            FragmentAdapter adapter = new FragmentAdapter(getChildFragmentManager());
             adapter.addFragment(KnowledgeFragment.newInstance("all"), "全部");
             adapter.addFragment(KnowledgeFragment.newInstance("Android"), "Android");
             adapter.addFragment(KnowledgeFragment.newInstance("IOS"), "IOS");
             adapter.addFragment(KnowledgeFragment.newInstance("前端"), "前端");
             viewpager.setAdapter(adapter);
+            // 左右预加载页面的个数
+            viewpager.setOffscreenPageLimit(3);
         }
     }
 

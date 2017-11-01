@@ -1,14 +1,12 @@
 package com.airxiao.o.utils;
 
-import com.airxiao.o.BuildConfig;
-
 /**
  * Created by xiaoyunlou on 17/10/30.
  */
 
 public class LogUtil {
-    private static final String TAG = BuildConfig.TAG;
-    private static final boolean LOG = BuildConfig.LOG;
+    private static final String TAG = "airxiao";
+    private static final boolean LOG = true;
 
     public static void i(String msg) {
         if (LOG)

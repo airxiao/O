@@ -68,6 +68,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
             adapter.addFragment(new StudyFragment(), "干货");
             adapter.addFragment(new WelfareFragment(), "福利");
             noscrollviewpager.setAdapter(adapter);
+            noscrollviewpager.setScroll(false);
+            // 左右预加载页面的个数
+            noscrollviewpager.setOffscreenPageLimit(1);
         }
     }
 

@@ -2,7 +2,6 @@ package com.airxiao.o.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,13 @@ import com.airxiao.o.adapter.RecyclerViewAdapter;
 import com.airxiao.o.base.BaseFragment;
 import com.airxiao.o.mvp.knowledge.KnowledgePresenter;
 import com.airxiao.o.mvp.knowledge.KnowledgeView;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import butterknife.BindView;
 
@@ -24,9 +30,12 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
 
     private RecyclerViewAdapter mRecyclerViewAdapter;
     private static final String TYPE = "Type";
+    private boolean mIsFirst = true;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
 
     public static KnowledgeFragment newInstance(String type) {
         KnowledgeFragment fragment = new KnowledgeFragment();
@@ -48,19 +57,59 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initView();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         initData();
+        initView();
     }
 
     private void initData() {
-        mRecyclerViewAdapter = new RecyclerViewAdapter();
-        recyclerView.setAdapter(mRecyclerViewAdapter);
+
+    }
+
+    // 只有当fragment可见并且没有过加载记录才可以加载
+    @Override
+    protected void loadData() {
+        super.loadData();
+        if (mIsVisible && mIsFirst) {
+            mIsFirst = false;
+            loadCustomData();
+        }
+
+    }
+
+    private void loadCustomData() {
+
     }
 
     private void initView() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        setupRefreshLayout();
+        setupRecyclerView();
+    }
+
+    private void setupRecyclerView() {
+//        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+    }
+
+    private void setupRefreshLayout() {
+        refreshLayout.autoRefresh();
+        //设置 Header 为 Material样式
+        refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
+        //设置 Footer 为 球脉冲
+        refreshLayout.setRefreshFooter(new BallPulseFooter(getContext()).setSpinnerStyle(SpinnerStyle.Scale));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh();
+            }
+        });
+
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadmore();
+            }
+        });
     }
 
 }
