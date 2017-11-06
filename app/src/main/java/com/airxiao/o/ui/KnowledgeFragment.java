@@ -79,7 +79,7 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     }
 
     private void loadCustomData() {
-
+        mvpPresenter.loadGankData();
     }
 
     private void initView() {

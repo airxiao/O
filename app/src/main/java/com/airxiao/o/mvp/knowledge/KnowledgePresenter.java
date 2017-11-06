@@ -13,6 +13,10 @@ public class KnowledgePresenter extends BasePresenter<KnowledgeView> {
     }
 
     public void loadGankData() {
+        mvpView.showLoading();
+
 
     }
+
+
 }
