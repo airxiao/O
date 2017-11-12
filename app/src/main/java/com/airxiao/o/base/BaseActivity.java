@@ -3,6 +3,7 @@ package com.airxiao.o.base;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 
@@ -54,5 +55,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         }
     }
 
+    public void toastShow(int resId) {
+        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
+    }
 
+    public void toastShow(String resId) {
+        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -3,9 +3,8 @@ package com.airxiao.o.base;
 import com.airxiao.o.retrofit.ApiClient;
 import com.airxiao.o.retrofit.ApiStores;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -15,7 +14,7 @@ import rx.subscriptions.CompositeSubscription;
 public class BasePresenter<V> {
     public V mvpView;
     protected ApiStores apiStores;
-    private CompositeSubscription mCompositeSubscription;
+    private CompositeDisposable mCompositeDisposable;
 
     public void attachView(V mvpView) {
         this.mvpView = mvpView;
@@ -28,19 +27,18 @@ public class BasePresenter<V> {
     }
 
     public void onUnsubscribe() {
-        if (mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
-            mCompositeSubscription.unsubscribe();
+        if (mCompositeDisposable != null) {
+            mCompositeDisposable.dispose();
+            mCompositeDisposable = null;
         }
     }
 
-    public void addSubscription(Observable observable, Observer observer) {
-        if (mCompositeSubscription == null) {
-            mCompositeSubscription = new CompositeSubscription();
+    public void addDisposable(Disposable disposable) {
+        if (mCompositeDisposable == null) {
+            mCompositeDisposable = new CompositeDisposable();
         }
-//        mCompositeSubscription.add( observable
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(observer));
+
+        mCompositeDisposable.add(disposable);
     }
 
 }

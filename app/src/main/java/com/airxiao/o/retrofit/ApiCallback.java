@@ -3,8 +3,8 @@ package com.airxiao.o.retrofit;
 
 import com.airxiao.o.utils.LogUtil;
 
+import io.reactivex.Observer;
 import retrofit2.adapter.rxjava.HttpException;
-import rx.Subscriber;
 
 /**
  * Created by WuXiaolong on 2016/9/22.
@@ -12,7 +12,7 @@ import rx.Subscriber;
  * 微信公众号：吴小龙同学
  * 个人博客：http://wuxiaolong.me/
  */
-public abstract class ApiCallback<M> extends Subscriber<M> {
+public abstract class ApiCallback<M> implements Observer<M> {
 
     public abstract void onSuccess(M model);
 
@@ -50,7 +50,8 @@ public abstract class ApiCallback<M> extends Subscriber<M> {
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
         onFinish();
     }
+
 }

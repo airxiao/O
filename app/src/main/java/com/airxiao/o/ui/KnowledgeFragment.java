@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.airxiao.o.R;
 import com.airxiao.o.adapter.RecyclerViewAdapter;
 import com.airxiao.o.base.BaseFragment;
+import com.airxiao.o.entity.KnowledageResBean;
 import com.airxiao.o.mvp.knowledge.KnowledgePresenter;
 import com.airxiao.o.mvp.knowledge.KnowledgeView;
 import com.scwang.smartrefresh.header.MaterialHeader;
@@ -19,6 +20,8 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -30,7 +33,12 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
 
     private RecyclerViewAdapter mRecyclerViewAdapter;
     private static final String TYPE = "Type";
+    private String mType = "all";
     private boolean mIsFirst = true;
+    // 开始请求的角标
+    private int mStart = 0;
+    // 一次请求的数量
+    private int mCount = 10;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -64,6 +72,10 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     }
 
     private void initData() {
+        if (getArguments() != null) {
+            mType = getArguments().getString(TYPE);
+        }
+
 
     }
 
@@ -79,7 +91,7 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     }
 
     private void loadCustomData() {
-        mvpPresenter.loadGankData();
+        mvpPresenter.loadGankData(mType, mStart, mCount);
     }
 
     private void initView() {
@@ -112,4 +124,13 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
         });
     }
 
+    @Override
+    public void getDataSuccess(List<KnowledageResBean.ResultsBean> list) {
+
+    }
+
+    @Override
+    public void getDataFail(String msg) {
+        toastShow(msg);
+    }
 }

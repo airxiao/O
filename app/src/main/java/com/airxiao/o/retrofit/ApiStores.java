@@ -2,9 +2,9 @@ package com.airxiao.o.retrofit;
 
 import com.airxiao.o.entity.KnowledageResBean;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import rx.Observable;
 
 /**
  * Created by WuXiaolong on 2016/3/24.

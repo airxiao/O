@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 
@@ -87,5 +88,13 @@ public abstract class BaseFragment<P extends BasePresenter>  extends Fragment {
             // progressDialog.hide();会导致android.view.WindowLeaked
             progressDialog.dismiss();
         }
+    }
+
+    public void toastShow(int resId) {
+        Toast.makeText(mActivity, resId, Toast.LENGTH_SHORT).show();
+    }
+
+    public void toastShow(String resId) {
+        Toast.makeText(mActivity, resId, Toast.LENGTH_SHORT).show();
     }
 }
