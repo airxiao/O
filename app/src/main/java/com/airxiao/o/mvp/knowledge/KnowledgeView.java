@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface KnowledgeView extends BaseView {
 
-    void getDataSuccess(List<KnowledageResBean.ResultsBean> list);
+    void getDataSuccess(List<KnowledageResBean.ResultsBean> list, int mStart);
 
     void getDataFail(String msg);
 }

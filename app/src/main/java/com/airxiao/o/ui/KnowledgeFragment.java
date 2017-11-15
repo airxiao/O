@@ -2,6 +2,7 @@ package com.airxiao.o.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,10 +37,12 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     private static final String TYPE = "Type";
     private String mType = "all";
     private boolean mIsFirst = true;
+    private boolean isPrepared = false;
     // 开始请求的角标
-    private int mStart = 0;
+    private int mStart = 1;
     // 一次请求的数量
     private int mCount = 10;
+    List<KnowledageResBean.ResultsBean> mDataList = new ArrayList<>();
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -67,23 +71,22 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initData();
         initView();
+        initData();
     }
 
     private void initData() {
         if (getArguments() != null) {
             mType = getArguments().getString(TYPE);
         }
-
-
     }
 
     // 只有当fragment可见并且没有过加载记录才可以加载
+    // 由于 setUserVisibleHint 方法早于 onActivityCreated，所以设置 isPrepared为false，避免loadCustomData 中 mvpPresenter对象为空
     @Override
     protected void loadData() {
         super.loadData();
-        if (mIsVisible && mIsFirst) {
+        if (mIsVisible && mIsFirst && isPrepared) {
             mIsFirst = false;
             loadCustomData();
         }
@@ -100,7 +103,9 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     }
 
     private void setupRecyclerView() {
-//        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), mDataList);
+        recyclerView.setAdapter(mRecyclerViewAdapter);
     }
 
     private void setupRefreshLayout() {
@@ -112,6 +117,8 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                mStart = 1;
+                loadCustomData();
                 refreshlayout.finishRefresh();
             }
         });
@@ -119,14 +126,28 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
+                loadCustomData();
                 refreshlayout.finishLoadmore();
             }
         });
     }
 
     @Override
-    public void getDataSuccess(List<KnowledageResBean.ResultsBean> list) {
+    public void getDataSuccess(List<KnowledageResBean.ResultsBean> list, int mStart) {
+        if (mStart == 1) {
+            if (list != null) {
+                if (mRecyclerViewAdapter == null) {
+                    mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), mDataList);
+                }
 
+                mDataList.clear();
+                mDataList.addAll(list);
+                mRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        } else {
+            mDataList.addAll(list);
+            mRecyclerViewAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

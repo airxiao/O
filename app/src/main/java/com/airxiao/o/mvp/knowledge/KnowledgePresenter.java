@@ -20,8 +20,8 @@ public class KnowledgePresenter extends BasePresenter<KnowledgeView> {
         attachView(knowledgeView);
     }
 
-    public void loadGankData(String mType, int mStart, int mCount) {
-        mvpView.showLoading();
+    public void loadGankData(String mType, final int mStart, int mCount) {
+//        mvpView.showLoading();
         apiStores.getGankIoData(mType, mStart, mCount)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -29,7 +29,7 @@ public class KnowledgePresenter extends BasePresenter<KnowledgeView> {
                     @Override
                     public void onSuccess(KnowledageResBean model) {
                         if (!model.isError() && model.getResults() != null) {
-                            mvpView.getDataSuccess(model.getResults());
+                            mvpView.getDataSuccess(model.getResults(), mStart);
                         } else {
                             LogUtil.d("isError: " + model.isError());
                             mvpView.getDataFail("获取数据失败");
@@ -43,7 +43,7 @@ public class KnowledgePresenter extends BasePresenter<KnowledgeView> {
 
                     @Override
                     public void onFinish() {
-                        mvpView.hideLoading();
+//                        mvpView.hideLoading();
                     }
 
                     @Override
