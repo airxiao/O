@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +83,7 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     }
 
     // 只有当fragment可见并且没有过加载记录才可以加载
-    // 由于 setUserVisibleHint 方法早于 onActivityCreated，所以设置 isPrepared为false，避免loadCustomData 中 mvpPresenter对象为空
+    // 由于 setUserVisibleHint 方法早于 onActivityCreated，所以设置 isPrepared 为 false，避免loadCustomData 中 mvpPresenter对象为空
     @Override
     protected void loadData() {
         super.loadData();
@@ -105,6 +106,12 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), mDataList);
+        if (TextUtils.equals(mType, "all")) {
+            mRecyclerViewAdapter.setIsAll(true);
+        } else {
+            mRecyclerViewAdapter.setIsAll(false);
+        }
+
         recyclerView.setAdapter(mRecyclerViewAdapter);
     }
 
@@ -126,6 +133,7 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
+                mStart ++;
                 loadCustomData();
                 refreshlayout.finishLoadmore();
             }
@@ -138,6 +146,11 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
             if (list != null) {
                 if (mRecyclerViewAdapter == null) {
                     mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), mDataList);
+                    if (TextUtils.equals(mType, "all")) {
+                        mRecyclerViewAdapter.setIsAll(true);
+                    } else {
+                        mRecyclerViewAdapter.setIsAll(false);
+                    }
                 }
 
                 mDataList.clear();

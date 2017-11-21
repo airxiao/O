@@ -53,7 +53,7 @@ public class StudyFragment extends BaseFragment<StudyPresenter> implements Study
             FragmentAdapter adapter = new FragmentAdapter(getChildFragmentManager());
             adapter.addFragment(KnowledgeFragment.newInstance("all"), "全部");
             adapter.addFragment(KnowledgeFragment.newInstance("Android"), "Android");
-            adapter.addFragment(KnowledgeFragment.newInstance("IOS"), "IOS");
+            adapter.addFragment(KnowledgeFragment.newInstance("iOS"), "IOS");
             adapter.addFragment(KnowledgeFragment.newInstance("前端"), "前端");
             viewpager.setAdapter(adapter);
             // 左右预加载页面的个数

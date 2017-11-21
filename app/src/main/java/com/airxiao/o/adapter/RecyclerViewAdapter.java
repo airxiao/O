@@ -25,6 +25,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private Context mContext;
     private List<KnowledageResBean.ResultsBean> list;
+    private boolean isAll;
+
+    public void setIsAll(boolean isAll) {
+        this.isAll = isAll;
+    }
 
     public RecyclerViewAdapter(Context mContext, List<KnowledageResBean.ResultsBean> list) {
         this.mContext = mContext;
@@ -54,7 +59,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.tv_who.setText(mContext.getString(R.string.no_name));
         }
 
-        holder.tv_type.setText(list.get(position).getType());
+        if (isAll) {
+            holder.tv_type.setVisibility(View.VISIBLE);
+            holder.tv_type.setText(" · " + list.get(position).getType());
+        } else {
+            holder.tv_type.setVisibility(View.GONE);
+        }
+
         holder.tv_time.setText(TimeUtil.getTranslateTime(list.get(position).getPublishedAt()));
     }
 
