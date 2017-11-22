@@ -15,6 +15,7 @@ import com.airxiao.o.base.BaseFragment;
 import com.airxiao.o.entity.KnowledageResBean;
 import com.airxiao.o.mvp.knowledge.KnowledgePresenter;
 import com.airxiao.o.mvp.knowledge.KnowledgeView;
+import com.airxiao.o.utils.LogUtil;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -72,6 +73,7 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        LogUtil.e("onActivityCreated");
         initView();
         initData();
     }
@@ -80,6 +82,9 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
         if (getArguments() != null) {
             mType = getArguments().getString(TYPE);
         }
+
+        isPrepared = true;
+        loadData();
     }
 
     // 只有当fragment可见并且没有过加载记录才可以加载
@@ -87,14 +92,15 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     @Override
     protected void loadData() {
         super.loadData();
+        LogUtil.e(mIsVisible + "" + mIsFirst + isPrepared);
         if (mIsVisible && mIsFirst && isPrepared) {
-            mIsFirst = false;
-            loadCustomData();
+            refreshLayout.autoRefresh();
         }
 
     }
 
     private void loadCustomData() {
+        mIsFirst = false;
         mvpPresenter.loadGankData(mType, mStart, mCount);
     }
 
@@ -116,7 +122,6 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     }
 
     private void setupRefreshLayout() {
-        refreshLayout.autoRefresh();
         //设置 Header 为 Material样式
         refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
         //设置 Footer 为 球脉冲
