@@ -37,7 +37,7 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
 
     private RecyclerViewAdapter mRecyclerViewAdapter;
     private static final String TYPE = "Type";
-    private String mType = "all";
+    private String mType = "";
     private boolean mIsFirst = true;
     private boolean isPrepared = false;
     // 开始请求的角标
@@ -81,6 +81,11 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     private void initData() {
         if (getArguments() != null) {
             mType = getArguments().getString(TYPE);
+            if (TextUtils.equals(mType, "all")) {
+                mRecyclerViewAdapter.setIsAll(true);
+            } else {
+                mRecyclerViewAdapter.setIsAll(false);
+            }
         }
 
         isPrepared = true;
@@ -112,12 +117,6 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), mDataList);
-        if (TextUtils.equals(mType, "all")) {
-            mRecyclerViewAdapter.setIsAll(true);
-        } else {
-            mRecyclerViewAdapter.setIsAll(false);
-        }
-
         recyclerView.setAdapter(mRecyclerViewAdapter);
     }
 
