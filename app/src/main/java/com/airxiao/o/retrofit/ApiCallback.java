@@ -1,8 +1,6 @@
 package com.airxiao.o.retrofit;
 
 
-import com.airxiao.o.utils.LogUtil;
-
 import io.reactivex.Observer;
 import retrofit2.adapter.rxjava.HttpException;
 
@@ -29,7 +27,6 @@ public abstract class ApiCallback<M> implements Observer<M> {
             //httpException.response().errorBody().string()
             int code = httpException.code();
             String msg = httpException.getMessage();
-            LogUtil.d("code=" + code);
             if (code == 504) {
                 msg = "网络不给力";
             }

@@ -17,6 +17,7 @@ import com.airxiao.o.config.ImageClickInterface;
 import com.airxiao.o.config.MyWebViewClient;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by xiaoyunlou on 17/10/30.
@@ -47,9 +48,11 @@ public class WebviewActivity extends AppCompatActivity implements IWebPageView {
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
+        ButterKnife.bind(this);
         getIntentData();
 
         initWebview();
+        webView.loadUrl(mUrl);
     }
 
     private void initWebview() {

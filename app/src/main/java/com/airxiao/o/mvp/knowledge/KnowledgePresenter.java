@@ -3,7 +3,6 @@ package com.airxiao.o.mvp.knowledge;
 import com.airxiao.o.base.BasePresenter;
 import com.airxiao.o.entity.KnowledageResBean;
 import com.airxiao.o.retrofit.ApiCallback;
-import com.airxiao.o.utils.LogUtil;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -31,7 +30,6 @@ public class KnowledgePresenter extends BasePresenter<KnowledgeView> {
                         if (!model.isError() && model.getResults() != null) {
                             mvpView.getDataSuccess(model.getResults(), mStart);
                         } else {
-                            LogUtil.d("isError: " + model.isError());
                             mvpView.getDataFail("获取数据失败");
                         }
                     }
