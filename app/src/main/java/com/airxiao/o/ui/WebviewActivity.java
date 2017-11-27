@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -14,7 +15,9 @@ import android.widget.ProgressBar;
 import com.airxiao.o.R;
 import com.airxiao.o.config.IWebPageView;
 import com.airxiao.o.config.ImageClickInterface;
+import com.airxiao.o.config.MyWebChromeClient;
 import com.airxiao.o.config.MyWebViewClient;
+import com.airxiao.o.utils.StatusBarUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +46,7 @@ public class WebviewActivity extends AppCompatActivity implements IWebPageView {
     public boolean mProgress90;
     // 网页是否加载完成
     public boolean mPageFinish;
+    private MyWebChromeClient mWebChromeClient;
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -50,9 +54,35 @@ public class WebviewActivity extends AppCompatActivity implements IWebPageView {
         setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
         getIntentData();
-
+        initTitle();
         initWebview();
         webView.loadUrl(mUrl);
+    }
+
+    private void getIntentData() {
+        if (getIntent() != null) {
+            mTitle = getIntent().getStringExtra(WEB_TITLE);
+            mUrl = getIntent().getStringExtra(WEB_URL);
+        }
+    }
+
+    private void initTitle() {
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            //去除默认Title显示
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.icon_back);
+        }
+        setTitle(mTitle);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void initWebview() {
@@ -93,20 +123,17 @@ public class WebviewActivity extends AppCompatActivity implements IWebPageView {
         /** 设置字体默认缩放大小(改变网页字体大小,setTextSize  api14被弃用)*/
         ws.setTextZoom(100);
 
-//        mWebChromeClient = new MyWebChromeClient(this);
-//        webView.setWebChromeClient(mWebChromeClient);
+        mWebChromeClient = new MyWebChromeClient(this);
+        webView.setWebChromeClient(mWebChromeClient);
+
         // 与js交互
         webView.addJavascriptInterface(new ImageClickInterface(this), "injectedObject");
         webView.setWebViewClient(new MyWebViewClient(this));
     }
 
-    private void getIntentData() {
-        if (getIntent() != null) {
-            mTitle = getIntent().getStringExtra(WEB_TITLE);
-            mUrl = getIntent().getStringExtra(WEB_URL);
-        }
+    public void setTitle(String mTitle) {
+        toolbar.setTitle(mTitle);
     }
-
 
 
 
