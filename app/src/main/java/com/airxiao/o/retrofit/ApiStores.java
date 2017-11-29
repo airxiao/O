@@ -1,6 +1,6 @@
 package com.airxiao.o.retrofit;
 
-import com.airxiao.o.entity.KnowledageResBean;
+import com.airxiao.o.entity.GankResBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -24,7 +24,7 @@ public interface ApiStores {
      * eg: http://gank.io/api/data/Android/10/1
      */
     @GET("data/{type}/{pre_page}/{page}")
-    Observable<KnowledageResBean> getGankIoData(@Path("type") String id, @Path("page") int page, @Path("pre_page") int pre_page);
+    Observable<GankResBean> getGankIoData(@Path("type") String id, @Path("page") int page, @Path("pre_page") int pre_page);
 
 
 

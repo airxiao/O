@@ -1,4 +1,4 @@
-package com.airxiao.o.mvp.knowledge;
+package com.airxiao.o.mvp.welfare;
 
 import com.airxiao.o.base.BasePresenter;
 import com.airxiao.o.entity.GankResBean;
@@ -8,15 +8,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-
 /**
- * Created by xiaoyunlou on 17/10/30.
+ * Created by xiaoyunlou on 17/11/29.
  */
 
-public class KnowledgePresenter extends BasePresenter<KnowledgeView> {
+public class WelfarePresenter extends BasePresenter<WelfareView> {
 
-    public KnowledgePresenter(KnowledgeView knowledgeView) {
-        attachView(knowledgeView);
+    public WelfarePresenter(WelfareView welfareView) {
+        attachView(welfareView);
     }
 
     public void loadGankData(String mType, final int mStart, int mCount) {
@@ -51,6 +50,5 @@ public class KnowledgePresenter extends BasePresenter<KnowledgeView> {
                 });
 
     }
-
 
 }

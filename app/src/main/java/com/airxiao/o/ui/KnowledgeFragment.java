@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.airxiao.o.R;
-import com.airxiao.o.adapter.RecyclerViewAdapter;
+import com.airxiao.o.adapter.StudyRecyclerViewAdapter;
 import com.airxiao.o.base.BaseFragment;
-import com.airxiao.o.entity.KnowledageResBean;
+import com.airxiao.o.entity.GankResBean;
 import com.airxiao.o.mvp.knowledge.KnowledgePresenter;
 import com.airxiao.o.mvp.knowledge.KnowledgeView;
 import com.scwang.smartrefresh.header.MaterialHeader;
@@ -34,7 +34,7 @@ import butterknife.BindView;
 
 public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implements KnowledgeView{
 
-    private RecyclerViewAdapter mRecyclerViewAdapter;
+    private StudyRecyclerViewAdapter mStudyRecyclerViewAdapter;
     private static final String TYPE = "Type";
     private String mType = "";
     private boolean mIsFirst = true;
@@ -43,7 +43,7 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     private int mStart = 1;
     // 一次请求的数量
     private int mCount = 10;
-    List<KnowledageResBean.ResultsBean> mDataList = new ArrayList<>();
+    List<GankResBean.ResultsBean> mDataList = new ArrayList<>();
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -80,9 +80,9 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
         if (getArguments() != null) {
             mType = getArguments().getString(TYPE);
             if (TextUtils.equals(mType, "all")) {
-                mRecyclerViewAdapter.setIsAll(true);
+                mStudyRecyclerViewAdapter.setIsAll(true);
             } else {
-                mRecyclerViewAdapter.setIsAll(false);
+                mStudyRecyclerViewAdapter.setIsAll(false);
             }
         }
 
@@ -91,14 +91,13 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     }
 
     // 只有当fragment可见并且没有过加载记录才可以加载
-    // 由于 setUserVisibleHint 方法早于 onActivityCreated，所以设置 isPrepared 为 false，避免loadCustomData 中 mvpPresenter对象为空
+    // 由于 setUserVisibleHint 方法早于 onActivityCreated(进行了初始化控件操作)，所以设置 isPrepared 为 false，避免loadCustomData 中 mvpPresenter对象为空
     @Override
     protected void loadData() {
         super.loadData();
         if (mIsVisible && mIsFirst && isPrepared) {
             refreshLayout.autoRefresh();
         }
-
     }
 
     private void loadCustomData() {
@@ -113,8 +112,8 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
 
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), mDataList);
-        recyclerView.setAdapter(mRecyclerViewAdapter);
+        mStudyRecyclerViewAdapter = new StudyRecyclerViewAdapter(getActivity(), mDataList);
+        recyclerView.setAdapter(mStudyRecyclerViewAdapter);
     }
 
     private void setupRefreshLayout() {
@@ -142,25 +141,25 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     }
 
     @Override
-    public void getDataSuccess(List<KnowledageResBean.ResultsBean> list, int mStart) {
+    public void getDataSuccess(List<GankResBean.ResultsBean> list, int mStart) {
         if (mStart == 1) {
             if (list != null) {
-                if (mRecyclerViewAdapter == null) {
-                    mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), mDataList);
+                if (mStudyRecyclerViewAdapter == null) {
+                    mStudyRecyclerViewAdapter = new StudyRecyclerViewAdapter(getActivity(), mDataList);
                     if (TextUtils.equals(mType, "all")) {
-                        mRecyclerViewAdapter.setIsAll(true);
+                        mStudyRecyclerViewAdapter.setIsAll(true);
                     } else {
-                        mRecyclerViewAdapter.setIsAll(false);
+                        mStudyRecyclerViewAdapter.setIsAll(false);
                     }
                 }
 
                 mDataList.clear();
                 mDataList.addAll(list);
-                mRecyclerViewAdapter.notifyDataSetChanged();
+                mStudyRecyclerViewAdapter.notifyDataSetChanged();
             }
         } else {
             mDataList.addAll(list);
-            mRecyclerViewAdapter.notifyDataSetChanged();
+            mStudyRecyclerViewAdapter.notifyDataSetChanged();
         }
     }
 

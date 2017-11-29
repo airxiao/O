@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airxiao.o.R;
-import com.airxiao.o.entity.KnowledageResBean;
+import com.airxiao.o.entity.GankResBean;
 import com.airxiao.o.ui.WebviewActivity;
 import com.airxiao.o.utils.ImgLoadUtil;
 import com.airxiao.o.utils.TimeUtil;
@@ -21,24 +21,24 @@ import java.util.List;
  * Created by xiaoyunlou on 17/10/26.
  */
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class StudyRecyclerViewAdapter extends RecyclerView.Adapter<StudyRecyclerViewAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<KnowledageResBean.ResultsBean> list;
+    private List<GankResBean.ResultsBean> list;
     private boolean isAll;
 
     public void setIsAll(boolean isAll) {
         this.isAll = isAll;
     }
 
-    public RecyclerViewAdapter(Context mContext, List<KnowledageResBean.ResultsBean> list) {
+    public StudyRecyclerViewAdapter(Context mContext, List<GankResBean.ResultsBean> list) {
         this.mContext = mContext;
         this.list = list;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.study_recyclerview_item, parent, false);
         return new ViewHolder(view);
     }
 

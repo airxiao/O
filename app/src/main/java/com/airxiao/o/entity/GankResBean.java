@@ -7,7 +7,7 @@ import java.util.List;
  * Created by xiaoyunlou on 17/10/26.
  */
 
-public class KnowledageResBean implements Serializable {
+public class GankResBean implements Serializable {
 
     private boolean error;
     private List<ResultsBean> results;
