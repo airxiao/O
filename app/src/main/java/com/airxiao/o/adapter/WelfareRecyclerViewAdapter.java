@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.airxiao.o.R;
 import com.airxiao.o.entity.GankResBean;
+import com.airxiao.o.utils.ImgLoadUtil;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class WelfareRecyclerViewAdapter extends RecyclerView.Adapter<WelfareRecy
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        ImgLoadUtil.displayImage(list.get(position).getUrl(), holder.iv_welfare);
     }
 
     @Override

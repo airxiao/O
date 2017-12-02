@@ -13,7 +13,8 @@ public class ImgLoadUtil {
 
 
     public static void displayEspImage(String url, ImageView imageView) {
-        Glide.with(imageView.getContext()).load(url)
+        Glide.with(imageView.getContext())
+                .load(url)
                 .asBitmap()
                 .placeholder(R.drawable.img_one_bi_one)
                 .error(R.drawable.img_one_bi_one)
@@ -21,6 +22,18 @@ public class ImgLoadUtil {
 //                .crossFade(1000)
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)// 缓存图片源文件（解决加载gif内存溢出问题）
 //                .into(new GlideDrawableImageViewTarget(imageView, 1));
+                .into(imageView);
+    }
+
+    /**
+     * 妹子图
+     */
+    public static void displayImage(String url, ImageView imageView) {
+        Glide.with(imageView.getContext())
+                .load(url)
+                .crossFade(500)
+                .placeholder(R.drawable.img_default_meizi)
+                .error(R.drawable.img_default_meizi)
                 .into(imageView);
     }
 
