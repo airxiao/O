@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.airxiao.o.R;
-import com.airxiao.o.entity.GankResBean;
 import com.airxiao.o.utils.ImgLoadUtil;
 
 import java.util.List;
@@ -20,9 +19,10 @@ import java.util.List;
 public class WelfareRecyclerViewAdapter extends RecyclerView.Adapter<WelfareRecyclerViewAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<GankResBean.ResultsBean> list;
+    private List<String> list;
+    private onItemClickListener listener;
 
-    public WelfareRecyclerViewAdapter(Context mContext, List<GankResBean.ResultsBean> list) {
+    public WelfareRecyclerViewAdapter(Context mContext, List<String> list) {
         this.list = list;
         this.mContext = mContext;
     }
@@ -34,8 +34,16 @@ public class WelfareRecyclerViewAdapter extends RecyclerView.Adapter<WelfareRecy
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        ImgLoadUtil.displayImage(list.get(position).getUrl(), holder.iv_welfare);
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        ImgLoadUtil.displayImage(list.get(position), holder.iv_welfare);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    listener.onClick(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -53,4 +61,13 @@ public class WelfareRecyclerViewAdapter extends RecyclerView.Adapter<WelfareRecy
 
         }
     }
+
+    public void setOnItemClickListener(onItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface onItemClickListener {
+        void onClick(int position);
+    }
+
 }

@@ -4,6 +4,8 @@ import android.widget.ImageView;
 
 import com.airxiao.o.R;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
 
 /**
  * Created by xiaoyunlou on 17/10/29.
@@ -34,6 +36,14 @@ public class ImgLoadUtil {
                 .crossFade(500)
                 .placeholder(R.drawable.img_default_meizi)
                 .error(R.drawable.img_default_meizi)
+                .into(imageView);
+    }
+
+    public static void displayPhotoView(String url, ImageView imageView, RequestListener<String, GlideDrawable> listener) {
+        Glide.with(imageView.getContext())
+                .load(url)
+                .crossFade(700)
+                .listener(listener)
                 .into(imageView);
     }
 

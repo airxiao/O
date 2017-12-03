@@ -24,6 +24,8 @@
 
         <activity android:name=".ui.WebviewActivity"/>
 
+        <activity android:name=".ui.BigImageActivity"/>
+
     </application>
 
 </manifest>

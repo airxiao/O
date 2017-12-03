@@ -1,5 +1,6 @@
 package com.airxiao.o.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -41,7 +42,7 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
     private int mStart = 1;
     // 一次请求的数量
     private int mCount = 10;
-    List<GankResBean.ResultsBean> mDataList = new ArrayList<>();
+    ArrayList<String> imgUrlList = new ArrayList<>();
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -73,8 +74,19 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
 
     private void setupRecyclerView() {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        mWelfareRecyclerViewAdapter = new WelfareRecyclerViewAdapter(getActivity(), mDataList);
+        mWelfareRecyclerViewAdapter = new WelfareRecyclerViewAdapter(getActivity(), imgUrlList);
         recyclerView.setAdapter(mWelfareRecyclerViewAdapter);
+        mWelfareRecyclerViewAdapter.setOnItemClickListener(new WelfareRecyclerViewAdapter.onItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("code", position);
+                bundle.putStringArrayList("imgUrlList", imgUrlList);
+                Intent intent = new Intent(getContext(), BigImageActivity.class);
+                intent.putExtras(bundle);
+                getContext().startActivity(intent);
+            }
+        });
     }
 
     private void setupRefreshLayout() {
@@ -125,15 +137,19 @@ public class WelfareFragment extends BaseFragment<WelfarePresenter> implements W
         if (mStart == 1) {
             if (list != null) {
                 if (mWelfareRecyclerViewAdapter == null) {
-                    mWelfareRecyclerViewAdapter = new WelfareRecyclerViewAdapter(getActivity(), mDataList);
+                    mWelfareRecyclerViewAdapter = new WelfareRecyclerViewAdapter(getActivity(), imgUrlList);
                 }
 
-                mDataList.clear();
-                mDataList.addAll(list);
+                imgUrlList.clear();
+                for (int i = 0; i < list.size(); i++) {
+                    imgUrlList.add(list.get(i).getUrl());
+                }
                 mWelfareRecyclerViewAdapter.notifyDataSetChanged();
             }
         } else {
-            mDataList.addAll(list);
+            for (int i = 0; i < list.size(); i++) {
+                imgUrlList.add(list.get(i).getUrl());
+            }
             mWelfareRecyclerViewAdapter.notifyDataSetChanged();
         }
     }
