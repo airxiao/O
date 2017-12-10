@@ -7,34 +7,53 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/navigation_item_1"
-            android:checked="true"
+            android:id="@+id/navHome"
             android:icon="@drawable/icon_home"
             android:title="首页" />
 
         <item
-            android:id="@+id/navigation_item_2"
-            android:icon="@drawable/abc_btn_radio_material"
-            android:title="关于作者" />
+            android:id="@+id/navProject"
+            android:icon="@drawable/icon_item_unselect"
+            android:title="关于项目" />
+
+        <item
+            android:id="@+id/navScan"
+            android:icon="@drawable/icon_scan"
+            android:title="扫码下载" />
+
+        <item
+            android:id="@+id/navGithubAdd"
+            android:icon="@drawable/icon_user"
+            android:title="Github地址" />
+
+        <item
+            android:id="@+id/navMode"
+            android:icon="@drawable/icon_earth"
+            android:title="夜间模式" />
+
+        <item
+            android:id="@+id/navExit"
+            android:icon="@drawable/icon_exit_app"
+            android:title="退出应用" />
 
     </group>
 
-    <item android:title="其他">
+    <!--<item android:title="其他">-->
 
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/navigation_item_day"
-                    android:icon="@drawable/abc_btn_radio_material"
-                    android:title="白天模式" />
+        <!--<menu>-->
+            <!--<group android:checkableBehavior="single">-->
+                <!--<item-->
+                    <!--android:id="@+id/navigation_item_day"-->
+                    <!--android:icon="@drawable/abc_btn_radio_material"-->
+                    <!--android:title="白天模式" />-->
 
-                <item
-                    android:id="@+id/navigation_item_night"
-                    android:icon="@drawable/abc_btn_radio_material"
-                    android:title="夜间模式" />
+                <!--<item-->
+                    <!--android:id="@+id/navigation_item_night"-->
+                    <!--android:icon="@drawable/abc_btn_radio_material"-->
+                    <!--android:title="夜间模式" />-->
 
-            </group>
-        </menu>
-    </item>
+            <!--</group>-->
+        <!--</menu>-->
+    <!--</item>-->
 
 </menu>

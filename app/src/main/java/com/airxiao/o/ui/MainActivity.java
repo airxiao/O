@@ -31,6 +31,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     @BindView(R.id.tabs)
     TabLayout tabs;
 
+    private static final String PROJECT_ADDRESS = "https://github.com/airxiao/O";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +80,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -101,19 +103,23 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawer_layout.closeDrawers();
         switch (item.getItemId()) {
-            case R.id.navigation_item_1:
-//                item.setChecked(true);
+            case R.id.navHome:
 
                 return true;
-            case R.id.navigation_item_2:
-//                item.setChecked(true);
+            case R.id.navProject:
 
                 return true;
-            case R.id.navigation_item_day:
+            case R.id.navScan:
 
                 return true;
-            case R.id.navigation_item_night:
+            case R.id.navGithubAdd:
+                WebviewActivity.loadUrl(this, PROJECT_ADDRESS, "O");
+                return true;
+            case R.id.navMode:
 
+                return true;
+            case R.id.navExit:
+                finish();
                 return true;
             default:
                 return true;
