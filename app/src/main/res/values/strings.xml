@@ -3,4 +3,24 @@
     <string name="action_settings">Settings</string>
 
     <string name="no_name">佚名</string>
+
+    <string name="string_about">
+        本项目是纯个人练习项目。
+        \n\n数据使用的是代码家的https://gank.io，一切数据解释权归代码家所有。
+        \n\n项目采用 Retrofit+RxJava 框架。
+        \n\n我的GitHub：https://github.com/airxiao
+        \n\n项目完全开源，如果对你有所帮助，请帮忙 Star 一下吧，非常感谢！
+    </string>
+
+    <string name="string_connection">Email: xiaoyunlou66@gmail.com</string>
+
+    <string name="string_lib">
+        com.github.bumptech.glide:glide:3.6.0
+        \ncom.jakewharton:butterknife:8.8.1
+        \ncom.squareup.retrofit2:retrofit:2.3.0
+        \nio.reactivex.rxjava2:rxjava:2.0.1
+        \ncom.scwang.smartrefresh:SmartRefreshLayout:1.0.3
+        \nphotoview
+    </string>
+
 </resources>

@@ -1,12 +1,10 @@
 package com.airxiao.o.ui;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +32,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     TabLayout tabs;
 
     private static final String PROJECT_ADDRESS = "https://github.com/airxiao/O";
-    private boolean isNight = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,33 +103,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawer_layout.closeDrawers();
         switch (item.getItemId()) {
-            case R.id.navHome:
-
-                return true;
             case R.id.navProject:
-
+                ProjectActivity.start(MainActivity.this);
                 return true;
             case R.id.navScan:
 
                 return true;
             case R.id.navGithubAdd:
                 WebviewActivity.loadUrl(this, PROJECT_ADDRESS, "O");
-                return true;
-            case R.id.navMode:
-                int nightMode;
-                if (isNight) {
-                    isNight = false;
-                    item.setTitle("夜间模式");
-                    nightMode = AppCompatDelegate.MODE_NIGHT_NO;
-                } else {
-                    isNight = true;
-                    item.setTitle("白天模式");
-                    nightMode = AppCompatDelegate.MODE_NIGHT_YES;
-                }
-                AppCompatDelegate.setDefaultNightMode(nightMode);
-                if (Build.VERSION.SDK_INT >= 11) {
-                    recreate();
-                }
                 return true;
             case R.id.navExit:
                 finish();

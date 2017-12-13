@@ -26,6 +26,8 @@
 
         <activity android:name=".ui.BigImageActivity"/>
 
+        <activity android:name=".ui.ProjectActivity"/>
+
     </application>
 
 </manifest>
