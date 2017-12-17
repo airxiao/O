@@ -67,7 +67,7 @@ public class WebviewActivity extends AppCompatActivity implements IWebPageView {
     }
 
     private void initTitle() {
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.green), 0);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

@@ -106,9 +106,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
             case R.id.navProject:
                 ProjectActivity.start(MainActivity.this);
                 return true;
-            case R.id.navScan:
-
-                return true;
             case R.id.navGithubAdd:
                 WebviewActivity.loadUrl(this, PROJECT_ADDRESS, "O");
                 return true;

@@ -12,11 +12,6 @@
             android:title="关于项目" />
 
         <item
-            android:id="@+id/navScan"
-            android:icon="@drawable/icon_scan"
-            android:title="扫码下载" />
-
-        <item
             android:id="@+id/navGithubAdd"
             android:icon="@drawable/icon_user"
             android:title="Github地址" />

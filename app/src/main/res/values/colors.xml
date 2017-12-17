@@ -4,6 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="red">#FF0000</color>
+    <color name="yellow">#FFD700</color>
+    <color name="green">#458B00</color>
+    <color name="blue">#3F51B5</color>
+
     <color name="colorTheme">#ffce3d3a</color>
     <!--页面背景的颜色-->
     <color name="colorPageBg">#f2f4f5</color>
